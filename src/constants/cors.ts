@@ -1,5 +1,5 @@
 import cors from "cors";
-import { CorsOriginCallback, CustomOrigin, StaticOrigin } from "../@types/cors";
+import { CorsOriginCallback, CustomOrigin, StaticOrigin } from "../@types/Cors";
 
 const ipWhitelist = ["https://localhost:3000", "http://localhost:3000"];
 

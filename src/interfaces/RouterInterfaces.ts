@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AppRouteHandle, MethodRoutes } from "../@types/app";
+import { AppRouteHandle, MethodRoutes } from "../@types/App";
 
 interface IRouter extends IRoutesParams, IRouterMethods {}
 

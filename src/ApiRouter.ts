@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { AppRouteHandle, MethodRoutes } from "./@types/app";
+import { AppRouteHandle, MethodRoutes } from "./@types/App";
 import { IRouter } from "./interfaces/RouterInterfaces";
 
 class ApiRouter implements IRouter {
