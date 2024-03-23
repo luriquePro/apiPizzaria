@@ -7,3 +7,8 @@ interface IAppConfigures {
 }
 
 export { IAppConfigures };
+
+interface IAppConfigureRepository {
+	getConfig(config: string): Promise<boolean | string | number>;
+}
+export { IAppConfigureRepository };

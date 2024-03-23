@@ -38,6 +38,7 @@ interface ISessionService {
 	create(userId: ObjectId): Promise<ISession>;
 	inactivateAll(userId: ObjectId): Promise<void>;
 	getLastLogin(userId: ObjectId): Promise<Date>;
+	getAllSessionsOpened(userId: ObjectId): Promise<ISession | null>;
 }
 
 export { ISessionService };

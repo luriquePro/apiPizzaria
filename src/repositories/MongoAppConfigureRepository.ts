@@ -1,10 +1,9 @@
-import { IAppConfigureRepository } from "../interfaces/AppConfigureInterface";
 import { AppConfigures } from "../models/AppConfigures";
 
-class MongoAppConfigureRepository implements IAppConfigureRepository {
-	async getConfig(config: string): Promise<boolean | string | number> {
+class MongoAppConfigureRepository {
+	public static async getConfig(config: string): Promise<boolean | string | number | undefined> {
 		const result = await AppConfigures.findOne({ config, status: 1 });
-		return result ? result.value : false;
+		return result?.value;
 	}
 }
 

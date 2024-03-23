@@ -6,7 +6,7 @@ import "express-async-errors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 
-import { CORS_OPTIONS } from "./constants/cors";
+import { CORS_OPTIONS } from "./constants/CORS";
 import { routes } from "./routes";
 import { IApp } from "./interfaces/AppInterfaces";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
