@@ -33,6 +33,12 @@ export class NotFoundError extends ApiError {
 	}
 }
 
+export class ValidationError extends ApiError {
+	constructor(message: string, session?: ClientSession) {
+		super(message, 422, session);
+	}
+}
+
 export class CustomError extends Error {
 	public readonly statusCode: number;
 	public readonly customError: boolean;

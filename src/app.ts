@@ -43,7 +43,7 @@ class App implements IApp {
 	}
 
 	private database(): void {
-		const mongoUri = this.isProduction ? (process.env.MONGODB_URI as string) : `dev_${process.env.MONGODB_URI}`;
+		const mongoUri = process.env.MONGODB_URI as string;
 		const dbName = this.isProduction ? (process.env.MONGODB_DATABASE as string) : `dev_${process.env.MONGODB_DATABASE}`;
 		mongoose
 			.connect(mongoUri, { dbName })
@@ -56,7 +56,7 @@ class App implements IApp {
 	}
 
 	private middlewaresPosRoute(): void {
-		if (process.env.APP_ENV === "production") {
+		if (this.formatError) {
 			this.express.use(errorMiddleware);
 		}
 	}
