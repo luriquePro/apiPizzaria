@@ -56,14 +56,26 @@ interface IUserUpdate {
 	email?: string;
 	password?: string;
 	status?: number;
+	last_login?: Date;
 	roles?: Roles;
 	user_responsible?: IUserResponsible;
 }
 
-export { IUser, IUserCreate, IUserCreateRepository, IUserRegisterReturn, IUserAuthenticate, IUserFind, IUserUpdate };
+interface IUserAuthenticateReturn {
+	id: string;
+	token: string;
+	roles: Roles;
+	email: string;
+	name: string;
+	start_session: Date;
+	end_session: Date;
+}
+
+export { IUser, IUserCreate, IUserCreateRepository, IUserRegisterReturn, IUserAuthenticate, IUserFind, IUserUpdate, IUserAuthenticateReturn };
 
 interface IUserServices {
 	create(dataUser: Partial<IUser>, dataUserCreate: IUserCreate): Promise<string>;
+	authenticate(dataUserAuthenticate: IUserAuthenticate): Promise<IUserAuthenticateReturn>;
 }
 
 interface IUserValidator {
@@ -75,6 +87,7 @@ interface IUserRepository {
 	findOneByObj(dataFind: IUserFind): Promise<IUser | null>;
 	findByObj(dataFind: IUserFind): Promise<IUser[] | null>;
 	create(dataCreate: IUserCreateRepository, session?: ClientSession): Promise<IUser>;
+	update(dataFilter: IUserFind, dataUpdate: IUserUpdate, session?: ClientSession): Promise<IUser | null>;
 }
 
 export { IUserServices, IUserValidator, IUserRepository };

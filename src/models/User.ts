@@ -56,17 +56,17 @@ const UserSchema = new Schema<IUserModel>(
 		user_responsible: {
 			name: {
 				type: String,
-				required: true,
+				// required: true,
 				trim: true,
 			},
 			login: {
 				type: String,
-				required: true,
+				// required: true,
 				trim: true,
 			},
 			id: {
 				type: Schema.Types.ObjectId,
-				required: true,
+				// required: true,
 				index: true,
 				ref: "users",
 			},

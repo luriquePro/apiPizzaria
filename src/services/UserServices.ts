@@ -1,11 +1,24 @@
 import md5 from "md5";
-import { BadRequestError } from "../helpers/ApiErrors";
-import { IUser, IUserCreate, IUserCreateRepository, IUserRepository, IUserServices, IUserValidator } from "../interfaces/UserInterfaces";
+import moment from "moment";
+import { STATUS } from "../constants/STATUS";
+import { BadRequestError, NotFoundError } from "../helpers/ApiErrors";
+import { IAuthenticateServices } from "../interfaces/AuthenticateInterfaces";
+import {
+	IUser,
+	IUserAuthenticate,
+	IUserAuthenticateReturn,
+	IUserCreate,
+	IUserCreateRepository,
+	IUserRepository,
+	IUserServices,
+	IUserValidator,
+} from "../interfaces/UserInterfaces";
 
 class UserServices implements IUserServices {
 	constructor(
 		private readonly uservalidator: IUserValidator,
 		private readonly userRepository: IUserRepository,
+		private readonly authenticateServices: IAuthenticateServices,
 	) {}
 
 	public async create(dataUser: Partial<IUser>, dataUserCreate: IUserCreate): Promise<string> {
@@ -38,6 +51,34 @@ class UserServices implements IUserServices {
 
 		await this.userRepository.create(dataUserCreateDTO);
 		return "Usuário cadastrado com sucesso.";
+	}
+	public async authenticate(dataUserAuthenticate: IUserAuthenticate): Promise<IUserAuthenticateReturn> {
+		this.uservalidator.authenticate(dataUserAuthenticate);
+
+		const getUserByLogin = await Promise.all([
+			this.userRepository.findOneByObj({ email: dataUserAuthenticate.login }),
+			this.userRepository.findOneByObj({ login: dataUserAuthenticate.login }),
+		]);
+
+		const userByLogin = getUserByLogin.filter((user) => user !== null)[0];
+		if (!userByLogin) {
+			throw new NotFoundError("Usuario não encontrado. Login invalido.");
+		}
+
+		if (userByLogin.status !== STATUS.ATIVO) {
+			throw new BadRequestError("Usuario não ativo. Entre em contato com o Suporte.");
+		}
+
+		// Testa a senha
+		const passwordHash = md5(dataUserAuthenticate.password + process.env.SECRET);
+		if (passwordHash !== userByLogin.password) {
+			throw new NotFoundError("Usuario não encontrado. Senha invalida");
+		}
+
+		await this.userRepository.update({ _id: userByLogin._id }, { last_login: moment().utc().toDate() });
+
+		const result = await this.authenticateServices.AuthSession(userByLogin, true);
+		return result;
 	}
 }
 

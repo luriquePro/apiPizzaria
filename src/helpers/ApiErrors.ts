@@ -1,5 +1,5 @@
 import { ClientSession } from "mongoose";
-import { IHelperErrors } from "../interfaces/HelpersInterface";
+import { IHelperErrors } from "../interfaces/HelpersInterfaces";
 
 export class ApiError extends Error implements IHelperErrors {
 	public readonly statusCode: number;
