@@ -9,7 +9,7 @@ class UserController {
 		const dataUserCreate: IUserCreate = { name, email, login, password, roles };
 
 		const result = await this.UserServices.create(req.user, dataUserCreate);
-		return res.json(result);
+		return res.status(201).json(result);
 	}
 
 	public async authenticate(req: Request, res: Response): Promise<Response> {

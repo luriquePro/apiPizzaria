@@ -1,8 +1,8 @@
-import { IUserAuthenticate, IUserCreate } from "../interfaces/UserInterfaces";
+import { IUserAuthenticate, IUserCreate, IUserValidator } from "../interfaces/UserInterfaces";
 import Utils from "../utils/Utils";
 import z, { ZodRawShape } from "zod";
 
-class UserValidator {
+class UserValidator implements IUserValidator {
 	public create(dataUserCreate: IUserCreate): void {
 		const userSchema: ZodRawShape = {
 			name: z.string().min(3, "The name field must have more then 3 letters"),

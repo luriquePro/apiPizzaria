@@ -52,7 +52,7 @@ class UserServices implements IUserServices {
 		};
 
 		await this.userRepository.create(dataUserCreateDTO);
-		return "Usuário cadastrado com sucesso.";
+		return "User successfully registered.";
 	}
 
 	public async authenticate(dataUserAuthenticate: IUserAuthenticate): Promise<IUserAuthenticateReturn> {
