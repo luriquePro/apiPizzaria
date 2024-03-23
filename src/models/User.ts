@@ -47,6 +47,7 @@ const UserSchema = new Schema<IUserModel>(
 			type: Number,
 			index: true,
 			required: true,
+			default: 1,
 		},
 		last_login: {
 			index: true,
