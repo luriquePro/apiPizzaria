@@ -54,6 +54,7 @@ class UserServices implements IUserServices {
 		await this.userRepository.create(dataUserCreateDTO);
 		return "Usuário cadastrado com sucesso.";
 	}
+
 	public async authenticate(dataUserAuthenticate: IUserAuthenticate): Promise<IUserAuthenticateReturn> {
 		this.uservalidator.authenticate(dataUserAuthenticate);
 
@@ -82,6 +83,7 @@ class UserServices implements IUserServices {
 		const result = await this.authenticateServices.AuthSession(userByLogin, true);
 		return result;
 	}
+
 	public async show(userId: ObjectId): Promise<IUserShowReturn> {
 		const userExists = await this.userRepository.findOneByObj({ _id: userId });
 		if (!userExists) {
