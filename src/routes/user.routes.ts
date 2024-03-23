@@ -1,5 +1,6 @@
 import { ApiRouter } from "../ApiRouter";
 import { UserController } from "../controllers/UserController";
+import { authMiddleware } from "../middlewares/authMiddleware";
 import { MongoSessionRepository } from "../repositories/MongoSessionRepository";
 import { MongoUserRepository } from "../repositories/MongoUserRepository";
 import { AuthenticateServices } from "../services/AuthenticateServices";
@@ -17,7 +18,10 @@ const uservalidator = new UserValidator();
 const userServices = new UserServices(uservalidator, UserRepository, authenticateServices);
 const userController = new UserController(userServices);
 
-UserRoutes.post("/register", userController.create.bind(userController));
 UserRoutes.post("/authenticate", userController.authenticate.bind(userController));
+
+UserRoutes.use(authMiddleware);
+
+UserRoutes.post("/register", userController.create.bind(userController));
 
 export { UserRoutes };

@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { AppRouteHandle, MethodRoutes } from "./@types/App";
+import { AppMiddleware, AppRouteHandle, MethodRoutes } from "./@types/App";
 import { IRouter } from "./interfaces/RouterInterfaces";
 
 class ApiRouter implements IRouter {
@@ -14,8 +14,11 @@ class ApiRouter implements IRouter {
 		return this.router[method](path, callback);
 	}
 
-	public use(path: string, router: Router) {
-		return this.router.use(path, router);
+	public use(path: string | Router | AppMiddleware, router?: Router) {
+		if (typeof path === "string" && router) {
+			return this.router.use(path, router);
+		}
+		return this.router.use(path as AppMiddleware);
 	}
 
 	public get(path: string, handle: AppRouteHandle) {

@@ -1,9 +1,17 @@
+import { v4 as uuid } from "uuid";
 import { Document, Schema, model } from "mongoose";
 import { ISession } from "../interfaces/SessionInterfaces";
 
 interface SessionModel extends Omit<Document, "id">, Omit<ISession, "_id"> {}
 const SessionSchema = new Schema<SessionModel>(
 	{
+		id: {
+			type: String,
+			unique: true,
+			required: true,
+			index: true,
+			default: uuid,
+		},
 		status: {
 			type: Number,
 			required: true,

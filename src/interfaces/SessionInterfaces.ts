@@ -3,6 +3,7 @@ import { ObjectId } from "mongoose";
 // Geral
 interface ISession {
 	_id: ObjectId;
+	id: string;
 	status: number;
 	user: ObjectId;
 	start_session: Date;
@@ -20,18 +21,14 @@ interface ISessionCreate {
 }
 
 interface ITokenCreate {
-	session_id: ObjectId;
-	user_id: string;
-	name: string;
+	sessionId: string;
+	userId: string;
+	login: string;
 }
 
-interface IToken {
-	session_id: ObjectId;
-	user_id: string;
-	name: string;
-}
+interface IToken extends ITokenCreate {}
 
-export { ISession, ISessionCreate, ITokenCreate, IToken };
+export { ISession, ISessionCreate, IToken, ITokenCreate };
 
 // Services
 interface ISessionService {
@@ -53,9 +50,10 @@ interface ISessionRepository {
 interface ISessionSearch {
 	status?: number;
 	user?: ObjectId;
+	id?: string;
 	end_session?: { $gt: Date };
 	start_session?: { $lte: Date };
 	_id?: ObjectId;
 }
 
-export { ISessionSearch, ISessionRepository };
+export { ISessionRepository, ISessionSearch };

@@ -37,9 +37,9 @@ class AuthenticateServices implements IAuthenticateServices {
 
 	private generateToken(user: IUser, session: ISession): IUserAuthenticateReturn {
 		const dataToken: ITokenCreate = {
-			session_id: session._id,
-			user_id: user.id,
-			name: user.name,
+			sessionId: session.id,
+			userId: user.id,
+			login: user.login,
 		};
 
 		const token = jwt.sign(dataToken, process.env.SECRET ?? "", { expiresIn: `${GlobalAppVariable.sessionTime}d` });

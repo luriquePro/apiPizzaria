@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 import moment from "moment";
 
-import { UnauthorizedError } from "../helpers/ApiErrors";
-import { MongoUserRepository } from "../repositories/MongoUserRepository";
-import { MongoSessionRepository } from "../repositories/MongoSessionRepository";
-import { STATUS } from "../constants/STATUS";
-import { IToken } from "../interfaces/SessionInterface";
 import { GlobalAppVariable } from "../constants/GLOBALS";
+import { STATUS } from "../constants/STATUS";
+import { UnauthorizedError } from "../helpers/ApiErrors";
+import { IToken } from "../interfaces/SessionInterfaces";
+import { IUser } from "../interfaces/UserInterfaces";
+import { MongoSessionRepository } from "../repositories/MongoSessionRepository";
+import { MongoUserRepository } from "../repositories/MongoUserRepository";
 
 const UserRepository = new MongoUserRepository();
 const SessionRepository = new MongoSessionRepository();
@@ -19,9 +19,9 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 		throw new UnauthorizedError("Restrict Access");
 	}
 
-	const { user_id, session_id } = jwt.verify(token, process.env.SECRET ?? "") as IToken;
+	const { userId, sessionId } = jwt.verify(token, process.env.SECRET as string) as IToken;
 
-	const user = await UserRepository.findOneByObj({ id: user_id });
+	const user = await UserRepository.findOneByObj({ id: userId });
 	if (!user || user.status != STATUS.ATIVO) {
 		throw new UnauthorizedError("Invalid Request");
 	}
@@ -34,20 +34,19 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 		user: user._id,
 		status: STATUS.ATIVO,
 		end_session: { $gt: moment().utc().toDate() },
-		_id: session_id,
+		id: sessionId,
 	});
 
 	if (!session) {
 		throw new UnauthorizedError("Sessão expirada, faça login novamente");
 	}
 
-	const { password: _, ...loggedUser } = user;
-	const { _id, status, user: __, ...loggedUserSession } = session;
+	const loggedUser = user as Partial<IUser>;
+	delete loggedUser.password;
 
-	GlobalAppVariable.roles = loggedUser.roles;
-
+	GlobalAppVariable.roles = user.roles;
 	req.user = loggedUser;
-	req.user_session = loggedUserSession;
+	req.user_session = session;
 
 	next();
 };
