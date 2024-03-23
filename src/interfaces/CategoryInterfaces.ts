@@ -14,9 +14,7 @@ interface ICategoryCreate {
 	name: string;
 }
 
-interface ICategoryCreateRepository {
-	name: string;
-}
+interface ICategoryCreateRepository extends ICategoryCreate {}
 
 interface ICategoryCreateReturn extends ICategory {}
 
