@@ -23,5 +23,6 @@ UserRoutes.post("/authenticate", userController.authenticate.bind(userController
 UserRoutes.use(authMiddleware);
 
 UserRoutes.post("/register", userController.create.bind(userController));
+UserRoutes.get("/show", userController.show.bind(userController));
 
 export { UserRoutes };

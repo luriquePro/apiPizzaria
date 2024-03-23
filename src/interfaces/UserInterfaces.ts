@@ -71,11 +71,31 @@ interface IUserAuthenticateReturn {
 	end_session: Date;
 }
 
-export { IUser, IUserCreate, IUserCreateRepository, IUserRegisterReturn, IUserAuthenticate, IUserFind, IUserUpdate, IUserAuthenticateReturn };
+interface IUserShowReturn {
+	id: string;
+	name: string;
+	login: string;
+	email: string;
+	last_login?: Date;
+	createdAt: Date;
+}
+
+export {
+	IUser,
+	IUserAuthenticate,
+	IUserAuthenticateReturn,
+	IUserCreate,
+	IUserCreateRepository,
+	IUserFind,
+	IUserRegisterReturn,
+	IUserShowReturn,
+	IUserUpdate,
+};
 
 interface IUserServices {
 	create(dataUser: Partial<IUser>, dataUserCreate: IUserCreate): Promise<string>;
 	authenticate(dataUserAuthenticate: IUserAuthenticate): Promise<IUserAuthenticateReturn>;
+	show(userId: ObjectId): Promise<IUserShowReturn>;
 }
 
 interface IUserValidator {
@@ -90,4 +110,4 @@ interface IUserRepository {
 	update(dataFilter: IUserFind, dataUpdate: IUserUpdate, session?: ClientSession): Promise<IUser | null>;
 }
 
-export { IUserServices, IUserValidator, IUserRepository };
+export { IUserRepository, IUserServices, IUserValidator };

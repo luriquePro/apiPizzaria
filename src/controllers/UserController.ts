@@ -19,6 +19,11 @@ class UserController {
 		const result = await this.UserServices.authenticate(dataUserAuthenticate);
 		return res.json(result);
 	}
+
+	public async show(req: Request, res: Response): Promise<Response> {
+		const result = await this.UserServices.show(req.user._id!);
+		return res.json(result);
+	}
 }
 
 export { UserController };

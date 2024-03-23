@@ -1,5 +1,6 @@
 import md5 from "md5";
 import moment from "moment";
+import { ObjectId } from "mongoose";
 import { STATUS } from "../constants/STATUS";
 import { BadRequestError, NotFoundError } from "../helpers/ApiErrors";
 import { IAuthenticateServices } from "../interfaces/AuthenticateInterfaces";
@@ -11,6 +12,7 @@ import {
 	IUserCreateRepository,
 	IUserRepository,
 	IUserServices,
+	IUserShowReturn,
 	IUserValidator,
 } from "../interfaces/UserInterfaces";
 
@@ -79,6 +81,16 @@ class UserServices implements IUserServices {
 
 		const result = await this.authenticateServices.AuthSession(userByLogin, true);
 		return result;
+	}
+	public async show(userId: ObjectId): Promise<IUserShowReturn> {
+		const userExists = await this.userRepository.findOneByObj({ _id: userId });
+		if (!userExists) {
+			throw new NotFoundError("User not exists");
+		}
+
+		const { id, name, login, email, last_login, createdAt } = userExists;
+		const dataUserShow: IUserShowReturn = { id, name, login, email, last_login, createdAt };
+		return dataUserShow;
 	}
 }
 

@@ -48,7 +48,7 @@ const authMiddleware = async (req: Request, res: Response, next: NextFunction) =
 	req.user = loggedUser;
 	req.user_session = session;
 
-	next();
+	return next();
 };
 
 export { authMiddleware };
