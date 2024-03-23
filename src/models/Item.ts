@@ -34,6 +34,14 @@ const ItemSchema = new Schema<IItemModel>(
 				ref: "products",
 			},
 		},
+		order: {
+			id: {
+				type: Schema.Types.ObjectId,
+				required: true,
+				index: true,
+				ref: "orders",
+			},
+		},
 		amount: {
 			type: Number,
 			required: true,

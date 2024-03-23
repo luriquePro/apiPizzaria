@@ -1,10 +1,11 @@
 import { ObjectId } from "mongoose";
-import { IItemProduct } from "../@types/Item";
+import { IItemOrder, IItemProduct } from "../@types/Item";
 
 interface IItem {
 	_id: ObjectId;
 	id: string;
 	product: IItemProduct;
+	order: IItemOrder;
 	amount: number;
 	total_price: number;
 	status: number;
@@ -15,6 +16,7 @@ interface IItem {
 
 interface IItemCreate {
 	product: IItemProduct;
+	order: IItemOrder;
 	amount: number;
 	total_price: number;
 }

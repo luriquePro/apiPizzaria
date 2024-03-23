@@ -5,4 +5,9 @@ interface IItemProduct {
 	price: number;
 	id: ObjectId;
 }
-export { IItemProduct };
+
+interface IItemOrder {
+	id: ObjectId;
+}
+
+export { IItemProduct, IItemOrder };
