@@ -73,5 +73,5 @@ const TableSchema = new Schema<ITableModel>(
 	},
 );
 
-const TableModel = model<ITableModel>("Categories", TableSchema);
+const TableModel = model<ITableModel>("Tables", TableSchema);
 export { TableModel };
