@@ -1,5 +1,11 @@
 import { BadRequestError } from "../helpers/ApiErrors";
-import { ICategoryCreateRepository, ICategoryRepository, ICategoryServices, ICategoryValidator } from "../interfaces/CategoryInterfaces";
+import {
+	ICategoryCreateRepository,
+	ICategoryListAllReturn,
+	ICategoryRepository,
+	ICategoryServices,
+	ICategoryValidator,
+} from "../interfaces/CategoryInterfaces";
 
 class CategoryServices implements ICategoryServices {
 	constructor(
@@ -16,6 +22,11 @@ class CategoryServices implements ICategoryServices {
 
 		await this.categoryRepository.create(dataCreate);
 		return "Category successfully registered.";
+	}
+
+	public async listAll(): Promise<ICategoryListAllReturn[]> {
+		const categories = await this.categoryRepository.listAll();
+		return categories;
 	}
 }
 

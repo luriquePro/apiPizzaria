@@ -11,6 +11,11 @@ class CategoryController {
 		const result = await this.categoryServices.create(dataCreate);
 		return res.status(201).json(result);
 	}
+
+	public async listAll(req: Request, res: Response): Promise<Response> {
+		const result = await this.categoryServices.listAll();
+		return res.json(result);
+	}
 }
 
 export { CategoryController };

@@ -10,6 +10,7 @@ import { CORS_OPTIONS } from "./constants/CORS";
 import { routes } from "./routes";
 import { IApp } from "./interfaces/AppInterfaces";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { logMiddleware } from "./middlewares/logMiddleware";
 
 class App implements IApp {
 	public express: Application;
@@ -38,6 +39,7 @@ class App implements IApp {
 		this.express.use(bodyParser.json());
 		this.express.use(bodyParser.urlencoded({ extended: false }));
 		this.express.use(express.json());
+		this.express.use(logMiddleware);
 
 		this.express.disable("X-Powered-By");
 	}

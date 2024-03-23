@@ -30,10 +30,16 @@ interface ICategoryUpdate {
 	status?: number;
 }
 
-export { ICategory, ICategoryCreate, ICategoryCreateRepository, ICategoryCreateReturn, ICategoryFind, ICategoryUpdate };
+interface ICategoryListAllReturn {
+	id: string;
+	name: string;
+}
+
+export { ICategory, ICategoryCreate, ICategoryCreateRepository, ICategoryCreateReturn, ICategoryFind, ICategoryListAllReturn, ICategoryUpdate };
 
 interface ICategoryServices {
 	create(dataCreate: ICategoryCreateRepository): Promise<string>;
+	listAll(): Promise<ICategoryListAllReturn[]>;
 }
 
 interface ICategoryValidator {
@@ -45,6 +51,7 @@ interface ICategoryRepository {
 	findByObj(dataFind: ICategoryFind): Promise<ICategory[] | null>;
 	findOneByObj(dataFind: ICategoryFind): Promise<ICategory | null>;
 	update(dataFilter: ICategoryFind, dataUpdate: ICategoryUpdate, session?: ClientSession): Promise<ICategory | null>;
+	listAll(): Promise<ICategoryListAllReturn[]>;
 }
 
 export { ICategoryRepository, ICategoryServices, ICategoryValidator };
