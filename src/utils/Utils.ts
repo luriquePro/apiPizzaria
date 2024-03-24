@@ -47,16 +47,9 @@ class Utils implements IUtils {
 					}else if(typeof queryObject == "boolean"){
 						resultQuery[column] = queryObject
 					} else {
-						//DEVIDO O BANCO TA COM CAMPO CPF EM STRING, É NECESSÁRIO CHECAR SE O CAMPO É CPF PARA NÃO CONVERTER PARA INTEIRO
-						// ISSO É NECESSÁRIO PARA RETORNAR DADOS QUE CONTÉM OS NÚMEROS DO CPF PASSADO E NÃO RETORNAR O CPF QUE TIVER O NÚMERO COMPLETO,
-						// O FRONT PASSA ESSE VALOR EM NUMBER
-						if (column == "cpf") {
-							resultQuery[column] = new RegExp(querySearch[column], "i");
-						} else {
-							resultQuery[column] = isNaN(querySearch[column])
+						resultQuery[column] = isNaN(querySearch[column])
 								? queryObject.value
 								: parseInt(querySearch[column]);
-						}
 					}
 				} catch (e) {
 					resultQuery[column] = new RegExp(querySearch[column], "i");
