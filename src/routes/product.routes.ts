@@ -17,5 +17,6 @@ const productController = new ProductController(productServices);
 ProductRoutes.use(authMiddleware);
 
 ProductRoutes.post("/create", productController.create.bind(productController));
+ProductRoutes.get("/list", productController.listAll.bind(productController));
 
 export { ProductRoutes };

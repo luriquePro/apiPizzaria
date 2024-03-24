@@ -1,4 +1,5 @@
 import { ClientSession, ObjectId } from "mongoose";
+import { IQueryFilter, IQueryOptions } from "./QueryFilterInterface";
 
 interface ICategory {
 	name: string;
@@ -43,17 +44,21 @@ interface IProductFind {
 
 interface IProductUpdate {}
 
-export { IProduct, IProductCreate, IProductCreateRepository, IProductCreateReturn, IProductFind, IProductUpdate };
+interface IProductListAllReturn {}
+
+export { IProduct, IProductCreate, IProductCreateRepository, IProductCreateReturn, IProductFind, IProductUpdate, IProductListAllReturn };
 
 interface IProductRepository {
 	create(dataCreate: IProductCreateRepository, session?: ClientSession): Promise<IProduct>;
 	findByObj(dataFind: IProductFind): Promise<IProduct[] | null>;
 	findOneByObj(dataFind: IProductFind): Promise<IProduct | null>;
 	update(dataFilter: IProductFind, dataUpdate: IProductUpdate, session?: ClientSession): Promise<IProduct | null>;
+	listAll(options: IQueryOptions): Promise<IProductListAllReturn>;
 }
 
 interface IProductServices {
 	create(dataCreate: IProductCreate): Promise<string>;
+	listAll(dataQueryFilter: IQueryFilter): Promise<IProductListAllReturn>;
 }
 
 interface IProductValidator {

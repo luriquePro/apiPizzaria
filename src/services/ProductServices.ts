@@ -1,6 +1,15 @@
 import { BadRequestError, NotFoundError } from "../helpers/ApiErrors";
 import { ICategoryRepository } from "../interfaces/CategoryInterfaces";
-import { IProductCreate, IProductCreateRepository, IProductRepository, IProductServices, IProductValidator } from "../interfaces/ProductInterfaces";
+import {
+	IProductCreate,
+	IProductCreateRepository,
+	IProductListAllReturn,
+	IProductRepository,
+	IProductServices,
+	IProductValidator,
+} from "../interfaces/ProductInterfaces";
+import { IQueryFilter, IQueryOptions } from "../interfaces/QueryFilterInterface";
+import Utils from "../utils/Utils";
 
 class ProductServices implements IProductServices {
 	constructor(
@@ -36,6 +45,16 @@ class ProductServices implements IProductServices {
 
 		await this.ProductRepository.create(dataProductCreate);
 		return "Product successfully registered.";
+	}
+
+	public async listAll(dataQueryFilter: IQueryFilter): Promise<IProductListAllReturn> {
+		const options: IQueryOptions = {
+			sort: dataQueryFilter.sort,
+			query: Utils.formatedDataWithRegularExpression(dataQueryFilter.querySearch),
+		};
+
+		const products = await this.ProductRepository.listAll(options);
+		return products;
 	}
 }
 
