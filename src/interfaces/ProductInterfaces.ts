@@ -49,7 +49,14 @@ interface IProductFind {
 
 interface IProductUpdate {}
 
-interface IProductListAllReturn {}
+interface IProductListAllReturn {
+	name: string;
+	price: number;
+	description: string;
+	banner_url: string;
+	id: string;
+	category: string;
+}
 
 export { IProduct, IProductCreate, IProductCreateRepository, IProductCreateReturn, IProductFind, IProductListAllReturn, IProductUpdate };
 
@@ -58,12 +65,12 @@ interface IProductRepository {
 	findByObj(dataFind: IProductFind): Promise<IProduct[] | null>;
 	findOneByObj(dataFind: IProductFind): Promise<IProduct | null>;
 	update(dataFilter: IProductFind, dataUpdate: IProductUpdate, session?: ClientSession): Promise<IProduct | null>;
-	listAll(options: IQueryOptions): Promise<IProductListAllReturn>;
+	listAll(options: IQueryOptions): Promise<IProductListAllReturn[]>;
 }
 
 interface IProductServices {
 	create(dataCreate: IProductCreate): Promise<string>;
-	listAll(dataQueryFilter: IQueryFilter): Promise<IProductListAllReturn>;
+	listAll(dataQueryFilter: IQueryFilter): Promise<IProductListAllReturn[]>;
 }
 
 interface IProductValidator {

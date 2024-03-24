@@ -65,14 +65,14 @@ class ProductServices implements IProductServices {
 		return "Product successfully registered.";
 	}
 
-	public async listAll(dataQueryFilter: IQueryFilter): Promise<IProductListAllReturn> {
+	public async listAll(dataQueryFilter: IQueryFilter): Promise<IProductListAllReturn[]> {
 		const options: IQueryOptions = {
 			sort: dataQueryFilter.sort,
 			query: Utils.formatedDataWithRegularExpression(dataQueryFilter.querySearch),
 		};
 
-		const products = await this.ProductRepository.listAll(options);
-		return products;
+		const result = await this.ProductRepository.listAll(options);
+		return result;
 	}
 }
 

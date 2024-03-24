@@ -41,12 +41,10 @@ const TableSchema = new Schema<ITableModel>(
 			x: {
 				type: Number,
 				index: true,
-				required: true,
 			},
 			y: {
 				type: Number,
 				index: true,
-				required: true,
 			},
 		},
 		near_windows: {

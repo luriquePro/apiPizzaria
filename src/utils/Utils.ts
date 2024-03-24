@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { IUtils } from "../interfaces/UtilsInterfaces";
 import { ValidationError } from "../helpers/ApiErrors";
+import { IUtils } from "../interfaces/UtilsInterfaces";
 
 class Utils implements IUtils {
 	public validationData(dataShape: z.ZodRawShape, dataValidation: object): object | never {
@@ -44,6 +44,8 @@ class Utils implements IUtils {
 						if (queryObject.value.$lte) dateObject["$lte"] = new Date(queryObject.value.$lte);
 
 						resultQuery[column] = dateObject;
+					}else if(typeof queryObject == "boolean"){
+						resultQuery[column] = queryObject
 					} else {
 						//DEVIDO O BANCO TA COM CAMPO CPF EM STRING, É NECESSÁRIO CHECAR SE O CAMPO É CPF PARA NÃO CONVERTER PARA INTEIRO
 						// ISSO É NECESSÁRIO PARA RETORNAR DADOS QUE CONTÉM OS NÚMEROS DO CPF PASSADO E NÃO RETORNAR O CPF QUE TIVER O NÚMERO COMPLETO,

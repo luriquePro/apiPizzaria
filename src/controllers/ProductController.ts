@@ -9,12 +9,6 @@ class ProductController {
 	constructor(private readonly ProductServices: IProductServices) {}
 
 	public async create(req: Request, res: Response): Promise<Response> {
-		// const { name, category, description, price } = req.body;
-		// const dataCreate: IProductCreate = { name, category, description, price };
-
-		// console.log(dataCreate);
-		// console.log(req.file);
-
 		return new Promise((resolve) => {
 			const form = formidable({ multiples: true });
 			form.parse(req, async (err, fields, files) => {

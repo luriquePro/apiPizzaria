@@ -32,7 +32,7 @@ class MongoProductRepository implements IProductRepository {
 		return result;
 	}
 
-	public async listAll(options: IQueryOptions): Promise<IProductListAllReturn> {
+	public async listAll(options: IQueryOptions): Promise<IProductListAllReturn[]> {
 		const result = await ProductModel.aggregate([
 			{
 				$match: {
