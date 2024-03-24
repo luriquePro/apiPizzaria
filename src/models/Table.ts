@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { Schema, Document, model } from "mongoose";
 import { ITable } from "../interfaces/TableInterfaces";
+import { STATUS } from "../constants/STATUS";
 
 // Interface de Model
 interface ITableModel extends Omit<Document, "id">, Omit<ITable, "_id"> {}
@@ -63,7 +64,7 @@ const TableSchema = new Schema<ITableModel>(
 			type: Number,
 			index: true,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
 		},
 	},
 	{

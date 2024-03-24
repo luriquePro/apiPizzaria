@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { Schema, Document, model } from "mongoose";
 import { IItem } from "../interfaces/ItemInterfaces";
+import { STATUS } from "../constants/STATUS";
 
 // Interface de Model
 interface IItemModel extends Omit<Document, "id">, Omit<IItem, "_id"> {}
@@ -56,7 +57,7 @@ const ItemSchema = new Schema<IItemModel>(
 			type: Number,
 			index: true,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
 		},
 	},
 	{

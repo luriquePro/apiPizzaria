@@ -1,3 +1,4 @@
+import { STATUS } from "../constants/STATUS";
 import { BadRequestError } from "../helpers/ApiErrors";
 import { IQueryFilter, IQueryOptions } from "../interfaces/QueryFilterInterface";
 import { ITableCreate, ITableListAllReturn, ITableRepository, ITableServices, ITableValidator } from "../interfaces/TableInterfaces";
@@ -12,8 +13,8 @@ class TableServices implements ITableServices {
 		this.tableValidator.create(dataCreate);
 
 		const [tableWithName, tableWithNumber] = await Promise.all([
-			this.tableRepository.findOneByObj({ name: dataCreate.name }),
-			this.tableRepository.findOneByObj({ number: dataCreate.number }),
+			this.tableRepository.findOneByObj({ name: dataCreate.name, status: STATUS.ATIVO }),
+			this.tableRepository.findOneByObj({ number: dataCreate.number, status: STATUS.ATIVO }),
 		]);
 
 		if (tableWithName) {

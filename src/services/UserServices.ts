@@ -27,8 +27,8 @@ class UserServices implements IUserServices {
 		this.uservalidator.create(dataUserCreate);
 
 		const [userWithEmail, userWithLogin] = await Promise.all([
-			this.userRepository.findOneByObj({ email: dataUserCreate.email }),
-			this.userRepository.findOneByObj({ login: dataUserCreate.login }),
+			this.userRepository.findOneByObj({ email: dataUserCreate.email, status: STATUS.ATIVO }),
+			this.userRepository.findOneByObj({ login: dataUserCreate.login, status: STATUS.ATIVO }),
 		]);
 
 		if (userWithEmail) {

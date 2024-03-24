@@ -17,6 +17,7 @@ import {
 } from "../interfaces/ProductInterfaces";
 import { IQueryFilter, IQueryOptions } from "../interfaces/QueryFilterInterface";
 import Utils from "../utils/Utils";
+import { STATUS } from "../constants/STATUS";
 
 class ProductServices implements IProductServices {
 	constructor(
@@ -27,12 +28,12 @@ class ProductServices implements IProductServices {
 	public async create(dataCreate: IProductCreate): Promise<string> {
 		this.ProductValidator.create(dataCreate);
 
-		const categoryExists = await this.categoryRepository.findOneByObj({ id: dataCreate.category });
+		const categoryExists = await this.categoryRepository.findOneByObj({ id: dataCreate.category, status: STATUS.ATIVO });
 		if (!categoryExists) {
 			throw new NotFoundError("Category not found.");
 		}
 
-		const productExists = await this.ProductRepository.findOneByObj({ name: dataCreate.name });
+		const productExists = await this.ProductRepository.findOneByObj({ name: dataCreate.name, status: STATUS.ATIVO });
 		if (productExists) {
 			throw new BadRequestError("Product is already exists.");
 		}

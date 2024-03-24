@@ -1,3 +1,4 @@
+import { STATUS } from "../constants/STATUS";
 import { BadRequestError } from "../helpers/ApiErrors";
 import {
 	ICategoryCreate,
@@ -15,7 +16,7 @@ class CategoryServices implements ICategoryServices {
 	public async create(dataCreate: ICategoryCreate): Promise<string> {
 		this.categoryValidator.create(dataCreate);
 
-		const categoryExists = await this.categoryRepository.findOneByObj({ name: dataCreate.name });
+		const categoryExists = await this.categoryRepository.findOneByObj({ name: dataCreate.name, status: STATUS.ATIVO });
 		if (categoryExists) {
 			throw new BadRequestError("Category is already exists.");
 		}

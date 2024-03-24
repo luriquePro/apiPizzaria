@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { Document, Schema, model } from "mongoose";
 import { ISession } from "../interfaces/SessionInterfaces";
+import { STATUS } from "../constants/STATUS";
 
 interface SessionModel extends Omit<Document, "id">, Omit<ISession, "_id"> {}
 const SessionSchema = new Schema<SessionModel>(
@@ -15,7 +16,7 @@ const SessionSchema = new Schema<SessionModel>(
 		status: {
 			type: Number,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
 		},
 		user: {
 			type: Schema.Types.ObjectId,

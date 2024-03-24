@@ -1,6 +1,7 @@
+import { Document, Schema, model } from "mongoose";
 import { v4 as uuid } from "uuid";
-import { Schema, Document, model } from "mongoose";
 import { IUser } from "../interfaces/UserInterfaces";
+import { STATUS } from "../constants/STATUS";
 
 // Interface de Model
 interface IUserModel extends Omit<Document, "id">, Omit<IUser, "_id"> {}
@@ -47,7 +48,7 @@ const UserSchema = new Schema<IUserModel>(
 			type: Number,
 			index: true,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
 		},
 		last_login: {
 			index: true,
@@ -56,17 +57,17 @@ const UserSchema = new Schema<IUserModel>(
 		user_responsible: {
 			name: {
 				type: String,
-				// required: true,
+				required: true,
 				trim: true,
 			},
 			login: {
 				type: String,
-				// required: true,
+				required: true,
 				trim: true,
 			},
 			id: {
 				type: Schema.Types.ObjectId,
-				// required: true,
+				required: true,
 				index: true,
 				ref: "users",
 			},

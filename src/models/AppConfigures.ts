@@ -1,5 +1,6 @@
 import { Document, Schema, model } from "mongoose";
 import { IAppConfigures } from "../interfaces/AppConfiguresInterfaces";
+import { STATUS } from "../constants/STATUS";
 
 interface AppConfigures extends Partial<Omit<Document, "id">>, IAppConfigures {}
 
@@ -26,7 +27,7 @@ const AppConfiguresSchema = new Schema<AppConfigures>(
 		status: {
 			type: Number,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
 		},
 	},
 	{

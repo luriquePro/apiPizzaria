@@ -1,6 +1,7 @@
 import { Document, Schema, model } from "mongoose";
 import { v4 as uuid } from "uuid";
 import { IProduct } from "../interfaces/ProductInterfaces";
+import { STATUS } from "../constants/STATUS";
 
 // Interface de Model
 interface IProductModel extends Omit<Document, "id">, Omit<IProduct, "_id"> {}
@@ -40,7 +41,7 @@ const ProductSchema = new Schema<IProductModel>(
 			type: Number,
 			index: true,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
 		},
 		category: {
 			name: {

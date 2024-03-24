@@ -6,4 +6,10 @@ interface IOrderTable {
 	id: ObjectId;
 }
 
-export { IOrderTable };
+interface IOrderUser {
+	name: string;
+	login: string;
+	id: ObjectId;
+}
+
+export { IOrderTable, IOrderUser };

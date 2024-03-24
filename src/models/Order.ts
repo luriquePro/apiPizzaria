@@ -1,5 +1,6 @@
+import { Document, Schema, model } from "mongoose";
 import { v4 as uuid } from "uuid";
-import { Schema, Document, model } from "mongoose";
+import { STATUS } from "../constants/STATUS";
 import { IOrder } from "../interfaces/OrderInterfaces";
 
 // Interface de Model
@@ -24,7 +25,7 @@ const OrderSchema = new Schema<IOrderModel>(
 			type: Boolean,
 			required: true,
 			index: true,
-			default: false,
+			default: true,
 		},
 		table: {
 			description: {
@@ -49,7 +50,28 @@ const OrderSchema = new Schema<IOrderModel>(
 			type: Number,
 			index: true,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
+		},
+		user: {
+			name: {
+				type: String,
+				required: true,
+				trim: true,
+			},
+			login: {
+				type: String,
+				required: true,
+				trim: true,
+			},
+			id: {
+				type: Schema.Types.ObjectId,
+				required: true,
+				index: true,
+				ref: "users",
+			},
+		},
+		finishedAt: {
+			type: Date,
 		},
 	},
 	{

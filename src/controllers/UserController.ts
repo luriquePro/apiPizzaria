@@ -2,13 +2,13 @@ import { Request, Response } from "express";
 import { IUserAuthenticate, IUserCreate, IUserServices } from "../interfaces/UserInterfaces";
 
 class UserController {
-	constructor(private readonly UserServices: IUserServices) {}
+	constructor(private readonly userServices: IUserServices) {}
 
 	public async create(req: Request, res: Response): Promise<Response> {
 		const { name, email, login, password, roles } = req.body;
 		const dataUserCreate: IUserCreate = { name, email, login, password, roles };
 
-		const result = await this.UserServices.create(req.user, dataUserCreate);
+		const result = await this.userServices.create(req.user, dataUserCreate);
 		return res.status(201).json(result);
 	}
 
@@ -16,12 +16,12 @@ class UserController {
 		const { login, password } = req.body;
 		const dataUserAuthenticate: IUserAuthenticate = { login, password };
 
-		const result = await this.UserServices.authenticate(dataUserAuthenticate);
+		const result = await this.userServices.authenticate(dataUserAuthenticate);
 		return res.json(result);
 	}
 
 	public async show(req: Request, res: Response): Promise<Response> {
-		const result = await this.UserServices.show(req.user._id!);
+		const result = await this.userServices.show(req.user._id!);
 		return res.json(result);
 	}
 }

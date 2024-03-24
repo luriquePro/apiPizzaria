@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { Schema, Document, model } from "mongoose";
 import { ICategory } from "../interfaces/CategoryInterfaces";
+import { STATUS } from "../constants/STATUS";
 
 // Interface de Model
 interface ICategoryModel extends Omit<Document, "id">, Omit<ICategory, "_id"> {}
@@ -24,7 +25,7 @@ const CategorySchema = new Schema<ICategoryModel>(
 			type: Number,
 			index: true,
 			required: true,
-			default: 1,
+			default: STATUS.ATIVO,
 		},
 	},
 	{

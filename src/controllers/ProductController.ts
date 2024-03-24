@@ -6,7 +6,7 @@ import { IProductCreate, IProductServices } from "../interfaces/ProductInterface
 import { IQuery, IQueryFilter } from "../interfaces/QueryFilterInterface";
 
 class ProductController {
-	constructor(private readonly ProductServices: IProductServices) {}
+	constructor(private readonly productServices: IProductServices) {}
 
 	public async create(req: Request, res: Response): Promise<Response> {
 		return new Promise((resolve) => {
@@ -31,7 +31,7 @@ class ProductController {
 				resolve(dataCreate);
 			});
 		}).then(async (dataCreate) => {
-			const result = await this.ProductServices.create(dataCreate as IProductCreate);
+			const result = await this.productServices.create(dataCreate as IProductCreate);
 			return res.status(201).json(result);
 		});
 	}
@@ -43,7 +43,7 @@ class ProductController {
 			querySearch,
 		};
 
-		const result = await this.ProductServices.listAll(dataQueryFilter);
+		const result = await this.productServices.listAll(dataQueryFilter);
 		return res.json(result);
 	}
 }
