@@ -1,6 +1,6 @@
 import { BadRequestError } from "../helpers/ApiErrors";
 import {
-	ICategoryCreateRepository,
+	ICategoryCreate,
 	ICategoryListAllReturn,
 	ICategoryRepository,
 	ICategoryServices,
@@ -12,7 +12,7 @@ class CategoryServices implements ICategoryServices {
 		private readonly categoryValidator: ICategoryValidator,
 		private readonly categoryRepository: ICategoryRepository,
 	) {}
-	public async create(dataCreate: ICategoryCreateRepository): Promise<string> {
+	public async create(dataCreate: ICategoryCreate): Promise<string> {
 		this.categoryValidator.create(dataCreate);
 
 		const categoryExists = await this.categoryRepository.findOneByObj({ name: dataCreate.name });

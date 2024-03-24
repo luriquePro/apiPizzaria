@@ -1,5 +1,5 @@
+import { Document, Schema, model } from "mongoose";
 import { v4 as uuid } from "uuid";
-import { Schema, Document, model } from "mongoose";
 import { IProduct } from "../interfaces/ProductInterfaces";
 
 // Interface de Model
@@ -33,7 +33,7 @@ const ProductSchema = new Schema<IProductModel>(
 		},
 		banner: {
 			type: String,
-			required: true,
+			// required: true,
 			trim: true,
 		},
 		status: {
