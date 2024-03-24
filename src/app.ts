@@ -7,10 +7,10 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 
 import { CORS_OPTIONS } from "./constants/CORS";
-import { routes } from "./routes";
 import { IApp } from "./interfaces/AppInterfaces";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { logMiddleware } from "./middlewares/logMiddleware";
+import { routes } from "./routes";
 
 class App implements IApp {
 	public express: Application;
@@ -18,20 +18,18 @@ class App implements IApp {
 	public formatError: boolean;
 
 	public constructor() {
-		this.config();
+		dotenv.config();
 
 		this.express = express();
 		this.isProduction = process.env.APP_ENV === "production" ? true : false;
 		this.formatError = process.env.FORMAT_ERROR === "true" ? true : false;
 
+		this.express.use("/tmp", express.static(__dirname + "/tmp"));
+
 		this.middlewarePreRoute();
 		this.database();
 		this.routes();
 		this.middlewaresPosRoute();
-	}
-
-	private config() {
-		dotenv.config();
 	}
 
 	private middlewarePreRoute() {

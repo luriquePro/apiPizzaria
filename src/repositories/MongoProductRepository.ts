@@ -1,4 +1,5 @@
 import { ClientSession } from "mongoose";
+import { STATUS } from "../constants/STATUS";
 import {
 	IProduct,
 	IProductCreateRepository,
@@ -7,9 +8,8 @@ import {
 	IProductRepository,
 	IProductUpdate,
 } from "../interfaces/ProductInterfaces";
-import { ProductModel } from "../models/Product";
 import { IQueryOptions } from "../interfaces/QueryFilterInterface";
-import { STATUS } from "../constants/STATUS";
+import { ProductModel } from "../models/Product";
 
 class MongoProductRepository implements IProductRepository {
 	public async create(dataCreate: IProductCreateRepository, session?: ClientSession): Promise<IProduct> {
@@ -49,7 +49,7 @@ class MongoProductRepository implements IProductRepository {
 					name: 1,
 					price: 1,
 					description: 1,
-					banner: 1,
+					banner_url: { $concat: ["/tmp/", "$banner"] },
 					id: 1,
 					category: "$category.name",
 				},

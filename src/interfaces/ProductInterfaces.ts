@@ -1,3 +1,4 @@
+import { File } from "formidable";
 import { ClientSession, ObjectId } from "mongoose";
 import { IQueryFilter, IQueryOptions } from "./QueryFilterInterface";
 
@@ -24,12 +25,16 @@ interface IProductCreate {
 	name: string;
 	price: number;
 	description: string;
-	banner?: string;
+	banner: File;
 	category: string;
 }
 
-interface IProductCreateRepository extends Omit<IProductCreate, "category"> {
+interface IProductCreateRepository {
+	name: string;
+	price: number;
+	description: string;
 	category: ICategory;
+	banner: string;
 }
 
 interface IProductCreateReturn extends IProduct {}
@@ -46,7 +51,7 @@ interface IProductUpdate {}
 
 interface IProductListAllReturn {}
 
-export { IProduct, IProductCreate, IProductCreateRepository, IProductCreateReturn, IProductFind, IProductUpdate, IProductListAllReturn };
+export { IProduct, IProductCreate, IProductCreateRepository, IProductCreateReturn, IProductFind, IProductListAllReturn, IProductUpdate };
 
 interface IProductRepository {
 	create(dataCreate: IProductCreateRepository, session?: ClientSession): Promise<IProduct>;

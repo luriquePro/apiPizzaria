@@ -1,4 +1,11 @@
-import { BadRequestError, NotFoundError } from "../helpers/ApiErrors";
+import fs from "fs";
+import imageThumbnail from "image-thumbnail";
+import { v4 as uuid } from "uuid";
+
+import path from "path";
+import { promisify } from "util";
+import { BannerExtensions } from "../constants/BANNER";
+import { ApiError, BadRequestError, NotFoundError } from "../helpers/ApiErrors";
 import { ICategoryRepository } from "../interfaces/CategoryInterfaces";
 import {
 	IProductCreate,
@@ -32,11 +39,22 @@ class ProductServices implements IProductServices {
 
 		const { name, description, price, banner } = dataCreate;
 
+		const imageType = banner.mimetype?.split("/")[1];
+		if (!BannerExtensions.includes(imageType!)) {
+			throw new ApiError("Tipo de arquivo não suportado", 403);
+		}
+		const fileName = `${uuid()}.${imageType}`;
+		const fileStream = await imageThumbnail(banner.filepath, { responseType: "buffer", percentage: 90 });
+		const filePath = path.join(__dirname, "..", "tmp", fileName);
+
+		const writeFileAsync = promisify(fs.writeFile);
+		await writeFileAsync(filePath, fileStream);
+
 		const dataProductCreate: IProductCreateRepository = {
 			name,
 			description,
 			price,
-			banner,
+			banner: fileName,
 			category: {
 				id: categoryExists._id,
 				name: categoryExists.name,

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { RequestHandler, Router } from "express";
 
 import { AppMiddleware, AppRouteHandle, MethodRoutes } from "./@types/App";
 import { IRouter } from "./interfaces/RouterInterfaces";
@@ -21,7 +21,10 @@ class ApiRouter implements IRouter {
 		return this.router.use(path as AppMiddleware);
 	}
 
-	public get(path: string, handle: AppRouteHandle) {
+	public get(path: string, handle: AppRouteHandle, middlewares?: AppRouteHandle | RequestHandler<unknown, unknown, Record<string, unknown>>) {
+		if (middlewares) {
+			return this.router.get(path, handle, middlewares);
+		}
 		return this.router.get(path, handle);
 	}
 
