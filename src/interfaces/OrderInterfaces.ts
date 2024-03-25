@@ -34,7 +34,7 @@ interface IOrderFind {
 	id?: string;
 	_id?: ObjectId;
 	status?: number;
-	"table.number": number;
+	"table.number"?: number;
 	user?: Partial<IOrderUser>;
 }
 
